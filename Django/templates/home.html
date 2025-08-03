@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Feedback</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <script>
+            function toggleTheme() {
+                const body = document.body;
+                if (body.classList.contains("dark")){
+                    body.classList.remove("dark");
+                    localStorage.setItem("theme", "light");
+                } else {
+                    body.classList.add("dark");
+                    localStorage.setItem("theme", "dark");
+                }
+            }
+
+            window.onload = function () {
+                const savedTheme = localStorage.getItem("theme");
+                if (savedTheme === "dark") {
+                    document.body.classList.add("dark");
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="toggleTheme()">toggleTheme</button>
+        <h1>Leave your Feedback</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <button type="submit">Send</button>
+        </form>
+
+        <hr>
+        <h2>Messages:</h2>
+        {% for msg in messages %}
+            <p><strong>{{ msg.name }}</strong>: {{ msg.message }}</p>
+        {% empty %}
+            <p>No messages yet</p>
+        {% endfor %}
+    </body>
+</html>

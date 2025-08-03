@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Feedback</title>
+    </head>
+
+    <body>
+        <h1>Leave your feedback</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your name"><br>
+            <textarea name="message" placeholder="Your message"></textarea><br>
+            <button type="submit">Send</button>
+        </form>
+
+        <hr>
+        <h2>Messages:</h2>
+        {% for msg in messages %}
+            <p><strong>{{ msg.name }}</strong>: {{ msg.message }}</p>
+        {% empty %}
+            <p>No messages yet.</p>
+        {% endfor %}
+    </body>
+</html>
